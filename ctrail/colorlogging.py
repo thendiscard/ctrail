@@ -122,8 +122,8 @@ def color_logging_setup():
     #
     proc_name = current_process().name
     proc_pid = os.getpid()
-    proc_info = f" {proc_name}/{proc_pid}:" if proc_name != 'MainProcess' else ''
-    fmt_str = f"%(asctime)s %(levelname)s:{proc_info} %(message)s"
+    proc_info = " {}/{}:".format(proc_name, proc_pid) if proc_name != 'MainProcess' else ''
+    fmt_str = "%(asctime)s %(levelname)s:{} %(message)s".format(proc_info)
     out_dev_istty = getattr(sys.stdout, 'isatty', None)
 
     if ((out_dev_istty is not None) and (out_dev_istty())):
@@ -133,16 +133,16 @@ def color_logging_setup():
                                      "\033[{0}{1}".format(
                                          LOGGING_LEVELS[lvl]['256color'],
                                          LOGGING_LEVELS[lvl]['name']))
-            fmt_str = f"\033[38;5;250m%(asctime)s\033[0m %(levelname)s:" \
-                      f"{proc_info} %(message)s\033[0m"
+            fmt_str = "\033[38;5;250m%(asctime)s\033[0m %(levelname)s:{} " \
+                      "%(message)s\033[0m".format(proc_info)
         elif ('xterm' in os.environ['TERM']):
             for lvl in LOGGING_LEVELS.keys():
                 logging_addLevelName(LOGGING_LEVELS[lvl]['level'],
                                      "\033[{0}{1}".format(
                                          LOGGING_LEVELS[lvl]['xterm'],
                                          LOGGING_LEVELS[lvl]['name']))
-            fmt_str = f"\033[37m%(asctime)s\033[0m %(levelname)s:" \
-                      f"{proc_info} %(message)s\033[0m"
+            fmt_str = "\033[37m%(asctime)s\033[0m %(levelname)s:{} " \
+                      "%(message)s\033[0m".format(proc_info)
         else:
             logging_addLevelName(LOGGING_LEVELS['NORMAL']['level'],
                                  LOGGING_LEVELS['NORMAL']['name'])
