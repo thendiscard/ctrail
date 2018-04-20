@@ -268,8 +268,8 @@ def opserver(address, port, os_token, os_auth_url, os_user, os_pass,
 
         if query_dict is not None:
             ctrail.opserver.query(address, port, os_token, query_dict, verb=GLOBAL_OPTS['verbose'])
-
-    ctrail.opserver.get(address, port, os_token, urls, verb=GLOBAL_OPTS['verbose'])
+    else:
+        ctrail.opserver.get(address, port, os_token, urls, verb=GLOBAL_OPTS['verbose'])
 
 
 @click.group(cls=AliasedGroup)

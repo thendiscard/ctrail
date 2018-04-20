@@ -8,7 +8,7 @@ can be used. However the information provided can be useful as is.
 
 ### Installation
 
-```shell
+```sh
 user@jump0:~$ python3 -m venv ctrail
 
 user@jump0:~$ source ctrail/bin/activate
@@ -68,7 +68,7 @@ Commands:
 ### Usage
 
 #### config
-```shell
+```sh
 (ctrail) evil@jump0:~$ ctrail config
 2018-04-20 14:51:53,405 ERROR: request for http://localhost:35357/v3/auth/tokens?nocatalog failed: HTTPConnectionPool(host='localhost', port=35357): Max retries exceeded with url: /v3/auth/tokens?nocatalog (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2655a29518>: Failed to establish a new connection: [Errno 111] Connection refused',))
 
@@ -127,7 +127,7 @@ virtual-network: default-domain:default-project:ip-fabric    uuid: 1e562439-8552
 ```
 
 #### control
-```shell
+```sh
 (ctrail) evil@jump0:~$ ctrail control
 control node routes:
     routing_instance: default-domain:acmecorp:net-acmevpn:net-acmevpn routing_table_name: default-domain:acmecorp:net-acmevpn:net-acmevpn.ermvpn.0 
@@ -207,7 +207,7 @@ control node routes:
 ```
 
 #### vrouter agent
-```shell
+```sh
 (ctrail) evil@jump0:~$ ctrail vrouter --help
 Usage: ctrail vrouter [OPTIONS] COMMAND [ARGS]...
 
@@ -399,7 +399,7 @@ access-lists:
 ```
 
 #### vrouter kernel
-```shell
+```sh
 (ctrail) evil@jump0:~$ ctrail v k --help
 Usage: ctrail v k [OPTIONS]
 
@@ -413,6 +413,7 @@ Options:
                       routes (can be specified multiple times).
   --flows             Show only flows active on the vrouter.
   --help              Show this message and exit.
+
 (ctrail) evil@jump0:~$ ctrail v k 
 mirror:
 flows (active):
@@ -518,4 +519,36 @@ routes (vrf id 1):
     10.0.90.4/32    vrf_id: 1 rid: 0 family: AF_INET nh_id: 23 label: 17 label_flags: MPLS PROXY-ARP index: 0 
 
 # ... output omitted ...
+
+(ctrail) evil@jump0:~$ ctrail v k -a compute0 --flows
+flows (active):
+    index: 39176 rflow: 448548 nhid: 19 underlay_udp_sport: 60257 insight: 0 ecmp_index: n/a 
+        action: FORWARD flags: ACTIVE | RFLOW_VALID vrf_id: 1 d_vrf_id: 0 qos_id: -1 gen_id: 1 ttl: 0 
+        sip: 10.0.90.4 sport: 9508 dip: 10.0.90.3 dport: 0 proto: 1 tcp_seq: 0 bytes: 1176 pkts: 14 
+
+    index: 448548 rflow: 39176 nhid: 19 underlay_udp_sport: 52878 insight: 0 ecmp_index: n/a 
+        action: FORWARD flags: ACTIVE | RFLOW_VALID vrf_id: 1 d_vrf_id: 0 qos_id: -1 gen_id: 1 ttl: 0 
+        sip: 10.0.90.3 sport: 9508 dip: 10.0.90.4 dport: 0 proto: 1 tcp_seq: 0 bytes: 1372 pkts: 14 
+
+(ctrail) evil@jump0:~$ ctrail v k -a compute1 --flows
+flows (active):
+
+(ctrail) evil@jump0:~$ ctrail v k -a compute2 --flows
+flows (active):
+    index: 161028 rflow: 516176 nhid: 24 underlay_udp_sport: 64178 insight: 0 ecmp_index: n/a 
+        action: FORWARD flags: ACTIVE | RFLOW_VALID vrf_id: 1 d_vrf_id: 0 qos_id: -1 gen_id: 1 ttl: 0 
+        sip: 10.0.90.4 sport: 9508 dip: 10.0.90.3 dport: 0 proto: 1 tcp_seq: 0 bytes: 2156 pkts: 22 
+
+    index: 516176 rflow: 161028 nhid: 24 underlay_udp_sport: 61079 insight: 0 ecmp_index: n/a 
+        action: FORWARD flags: ACTIVE | RFLOW_VALID vrf_id: 1 d_vrf_id: 0 qos_id: -1 gen_id: 1 ttl: 0 
+        sip: 10.0.90.3 sport: 9508 dip: 10.0.90.4 dport: 0 proto: 1 tcp_seq: 0 bytes: 1848 pkts: 22 
+
+(ctrail) evil@jump0:~$ ctrail v k -a compute3 --flows
+flows (active):
+```
+
+#### analytics (opserver)
+
+```sh
+
 ```
